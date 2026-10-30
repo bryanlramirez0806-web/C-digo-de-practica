@@ -29,13 +29,15 @@ public class Bienvenida extends JFrame {
 
         // Panel izquierdo
         pi = new JPanel();
-        pi.setBackground(Color.white);
-        pi.add(new JLabel("Panel izquierdo"));
+        pi.setBackground(new Color(30, 30, 30));
+        JLabel lblIzq = new JLabel("Panel izquierdo");
+        lblIzq.setForeground(Color.white);      
+        pi.add(lblIzq);
         pi.setPreferredSize(new Dimension(200, getHeight()));
 
-        // Panel Superior
+        // Panel Superior 
         ps = new JPanel();
-        ps.setBackground(new Color(20, 110, 55));
+        ps.setBackground(new Color(20, 40, 80)); 
         JLabel titulo = new JLabel("Sistema de Gestión...");
         titulo.setForeground(Color.white);
         Font fuente = new Font("Arial", Font.BOLD, 18);
@@ -44,14 +46,22 @@ public class Bienvenida extends JFrame {
 
         cl = new CardLayout();
         pc = new JPanel(cl);
-        pc.add(new JLabel("Welcome to Java ..."), "home");
+        pc.setBackground(new Color(40, 40, 40)); 
+        
+        JLabel lblWelcome = new JLabel("Welcome to Java ...");
+        lblWelcome.setForeground(Color.white);  
+        pc.add(lblWelcome, "home");
+        
         pc.add(new Mensaje(), "mensaje");
 
+        // Panel derecho
         pd = new JPanel();
-        pd.setBackground(Color.white);
-        pd.add(new JLabel("Panel derecho "));
+        pd.setBackground(new Color(30, 30, 30)); 
+        JLabel lblDer = new JLabel("Panel derecho");
+        lblDer.setForeground(Color.white);       
+        pd.add(lblDer);
         pd.setPreferredSize(new Dimension(200, getHeight()));
-
+        
         this.setLayout(new BorderLayout());
         this.add(pi, BorderLayout.WEST);
         this.add(pd, BorderLayout.EAST);

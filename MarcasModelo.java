@@ -12,6 +12,7 @@ public class MarcasModelo extends Conexion implements DAO {
         super();
     }
 
+    //Metodo de Consulta
     @Override
     public List read() {
         List<Marcas> lista = new ArrayList<>();
@@ -27,7 +28,9 @@ public class MarcasModelo extends Conexion implements DAO {
             System.out.println("Error: " + ex.getMessage());
         } finally {
             try {
-                cnx.close();
+                if (cnx != null) {
+                    cnx.close();
+                }
             } catch (SQLException ex) {
                 System.out.println("Error: " + ex.getMessage());
             }
@@ -35,33 +38,73 @@ public class MarcasModelo extends Conexion implements DAO {
         return lista;
     }
 
+    //Metodo de Agregar
     @Override
     public int create(Object obj) {
         try {
             this.conectar();
-            Marcas marca = (Marcas) obj;
-            ps = cnx.prepareStatement("insert into marca (nombreMarca) values (?)");
-            ps.setString(1, marca.getNombre());
+            Marcas marcas = (Marcas) obj; 
+            ps = cnx.prepareStatement("INSERT INTO marca (nombreMarca) VALUES (?)");
+            ps.setString(1, marcas.getNombre());
             return ps.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         } finally {
             try {
-                cnx.close();
+                if (cnx != null) { 
+                    cnx.close();
+                }
             } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
             }
         }
         return 0;
     }
 
+    //Metodo de Actualizar
     @Override
-    public int delete(Object obj) {
+    public int update(Object obj) {
+        try {
+            this.conectar();
+            Marcas marcas = (Marcas) obj;
+            ps = cnx.prepareStatement("UPDATE marca SET nombreMarca = ? WHERE idMarca = ?");
+            ps.setString(1, marcas.getNombre());
+            ps.setInt(2, marcas.getId()); 
+            return ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        } finally {
+            try {
+                if (cnx != null) {
+                    cnx.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
+            }
+        }
         return 0;
     }
 
+    //Metodo de eliminar
     @Override
-    public int update(Object lista) {
+    public int delete(Object obj) {
+        try {
+            this.conectar();
+            Marcas marcas = (Marcas) obj;
+            ps = cnx.prepareStatement("DELETE FROM marca WHERE idMarca = ?");
+            ps.setInt(1, marcas.getId());
+            return ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        } finally {
+            try {
+                if (cnx != null) {
+                    cnx.close();
+                }
+            } catch (SQLException ex) {
+                System.out.println("Error al cerrar conexión: " + ex.getMessage());
+            }
+        }
         return 0;
     }
 }
